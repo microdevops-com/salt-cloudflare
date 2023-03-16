@@ -231,8 +231,8 @@ def _existing_by_page(uri, auth_email, auth_key, api_token):
     success = [True]
     page = 1
     while True:
-        uri = f'{uri}?page={page}'
-        resp = _request(uri, method="GET", json=None, auth_email=auth_email, auth_key=auth_key, api_token=api_token)
+        url = f'{uri}?page={page}'
+        resp = _request(url, method="GET", json=None, auth_email=auth_email, auth_key=auth_key, api_token=api_token)
         data += resp.get('result', [])
         success.append(resp['success'])
         current_page = resp["result_info"]["page"]
@@ -795,7 +795,7 @@ def dns_records(
         def data(self):
             if self.type == "SRV":
                 service, proto, name = self.name.split(".", 2)
-                parts = self.content.split("\t")
+                parts = self.content.split(" ")
                 if len(parts) == 3:
                     # record should look like this: "priority weight port target"
                     # cloudflare returns: "weight port target"
